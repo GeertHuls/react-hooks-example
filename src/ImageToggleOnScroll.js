@@ -25,12 +25,21 @@ const ImageToggleOnScroll = ({ primaryImg, secondaryImg }) => {
     setInView(isInView());
   };
 
-  return <img src={
-    isLoading
-    ? 'data:image/gif;base64,R0lGODlhAQABAIAAAP///wAAACH5BAEAAAAALAAAAAABAAEAAAICRAEAOw==' // 1x1gif
-    : inView
-      ? secondaryImg
-      : primaryImg} alt="" ref={imageRef} />;
+  return (
+    <img
+      src={
+        isLoading
+          ? 'data:image/gif;base64,R0lGODlhAQABAIAAAP///wAAACH5BAEAAAAALAAAAAABAAEAAAICRAEAOw==' // 1x1gif
+          : inView
+          ? secondaryImg
+          : primaryImg
+      }
+      alt=""
+      ref={imageRef}
+      width="200"
+      height="200"
+    />
+  );
 };
 
 export default ImageToggleOnScroll;
