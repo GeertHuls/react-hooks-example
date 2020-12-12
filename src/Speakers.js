@@ -1,4 +1,4 @@
-import React, { useContext, useEffect, useReducer, useState } from 'react';
+import React, { useContext, useEffect, useReducer, useState, useCallback } from 'react';
 
 import { Header } from '../src/Header';
 import { Menu } from '../src/Menu';
@@ -63,7 +63,8 @@ const Speakers = ({}) => {
     setSpeakingSunday(!speakingSunday);
   };
 
-  const heartFavoriteHandler = (e, favoriteValue) => {
+  // useCallback is used to cache functions:
+  const heartFavoriteHandler = useCallback((e, favoriteValue) => {
     e.preventDefault();
     const sessionId = parseInt(e.target.attributes['data-sessionid'].value);
 
@@ -81,7 +82,7 @@ const Speakers = ({}) => {
     //     return item;
     //   })
     // );
-  };
+  }, []); // the return of the useCallback function caches this value.
 
   if (isLoading) return <div>Loading...</div>;
 
