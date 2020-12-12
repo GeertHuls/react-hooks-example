@@ -1,4 +1,4 @@
-import React, { useContext, useEffect, useState } from 'react';
+import React, { useContext, useEffect, useReducer, useState } from 'react';
 
 import { Header } from '../src/Header';
 import { Menu } from '../src/Menu';
@@ -10,7 +10,23 @@ const Speakers = ({}) => {
   const [speakingSaturday, setSpeakingSaturday] = useState(true);
   const [speakingSunday, setSpeakingSunday] = useState(true);
 
-  const [speakerList, setSpeakerList] = useState([]);
+  // CODE ONLY LEFT HERE COMMENTED OUT FOR TEACH PURPOSES.
+  // BEST PRACTICE WOULD BE TO REMOVE COMMENTED CODE OUT AS IT
+  //   WOULD BE IN SOURCE CONTROL AND NOT NECESSARY.
+
+  //const [speakerList, setSpeakerList] = useState([]);
+
+  function speakersReducer(state, action) {
+    switch (action.type) {
+      case 'setSpeakerList': {
+        return action.data;
+      }
+      default:
+        return state;
+    }
+  }
+  const [speakerList, dispatch] = useReducer(speakersReducer, []);
+
   const [isLoading, setIsLoading] = useState(true);
 
   const context = useContext(ConfigContext);
@@ -26,7 +42,11 @@ const Speakers = ({}) => {
       const speakerListServerFilter = SpeakerData.filter(({ sat, sun }) => {
         return (speakingSaturday && sat) || (speakingSunday && sun);
       });
-      setSpeakerList(speakerListServerFilter);
+      //setSpeakerList(speakerListServerFilter);
+      dispatch({
+        type: 'setSpeakerList',
+        data: speakerListServerFilter,
+      });
     });
     return () => {
       console.log('cleanup');
@@ -61,6 +81,12 @@ const Speakers = ({}) => {
   const heartFavoriteHandler = (e, favoriteValue) => {
     e.preventDefault();
     const sessionId = parseInt(e.target.attributes['data-sessionid'].value);
+
+    alert(
+      'PLURALSIGHT COURSE NOTE: setSpeakerList IS BROKEN ON PURPOSE.  THIS IS FIXED IN NEXT CLIP',
+    );
+
+    // PLURALSIGHT COURSE NOTE: setSpeakerList IS BROKEN ON PURPOSE.  THIS IS FIXED IN NEXT CLIP
     setSpeakerList(
       speakerList.map((item) => {
         if (item.id === sessionId) {
@@ -69,7 +95,6 @@ const Speakers = ({}) => {
         return item;
       }),
     );
-    //console.log("changing session favorte to " + favoriteValue);
   };
 
   if (isLoading) return <div>Loading...</div>;
