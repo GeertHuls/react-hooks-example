@@ -1,4 +1,4 @@
-import { useCallback, useContext, useMemo, useState } from 'react';
+import React, { useCallback, useContext, useMemo, useState } from 'react';
 
 import { Header } from './Header';
 import { Menu } from './Menu';
@@ -89,6 +89,7 @@ const Speakers = ({}) => {
         <div className="row">
           <div className="card-deck">
             {speakerListFiltered.map((speakerRec) => {
+              console.log(speakerRec);
               return (
                 <SpeakerDetail
                   key={speakerRec.id}
