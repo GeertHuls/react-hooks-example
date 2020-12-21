@@ -11,8 +11,13 @@ const Speakers = ({}) => {
   const [speakingSunday, setSpeakingSunday] = useState(true);
   const context = useContext(ConfigContext);
 
-  const { isLoading, speakerList,
-    toggleSpeakerFavorite } = useContext(GlobalContext);
+  const {
+    isLoading,
+    speakerList,
+    toggleSpeakerFavorite,
+    hasErrored,
+    error,
+  } = useContext(GlobalContext);
 
   const handleChangeSaturday = () => {
     setSpeakingSaturday(!speakingSaturday);
@@ -47,6 +52,8 @@ const Speakers = ({}) => {
   );
 
   const speakerListFiltered = isLoading ? [] : newSpeakerList;
+
+  if (hasErrored === true) return <div>Error: {error.message}</div>;
 
   if (isLoading) return <div>Loading...</div>;
 
@@ -86,7 +93,6 @@ const Speakers = ({}) => {
         <div className="row">
           <div className="card-deck">
             {speakerListFiltered.map((speakerRec) => {
-              console.log(speakerRec);
               return (
                 <SpeakerDetail
                   key={speakerRec.id}
